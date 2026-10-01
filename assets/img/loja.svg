@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 652" width="1160" height="652">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1530"/>
+      <stop offset="50%" stop-color="#162758"/>
+      <stop offset="100%" stop-color="#0b1530"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff5b14" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ff5b14" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blueGlow" cx="80%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#1b3fd8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#1b3fd8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1160" height="652" fill="url(#bg)"/>
+  <circle cx="580" cy="326" r="300" fill="url(#glow)"/>
+  <circle cx="900" cy="200" r="260" fill="url(#blueGlow)"/>
+  
+  <g opacity="0.08" stroke="#ffffff" stroke-width="1.5">
+    <line x1="0" y1="130" x2="1160" y2="130"/>
+    <line x1="0" y1="260" x2="1160" y2="260"/>
+    <line x1="0" y1="390" x2="1160" y2="390"/>
+    <line x1="0" y1="520" x2="1160" y2="520"/>
+    <line x1="232" y1="0" x2="232" y2="652"/>
+    <line x1="464" y1="0" x2="464" y2="652"/>
+    <line x1="696" y1="0" x2="696" y2="652"/>
+    <line x1="928" y1="0" x2="928" y2="652"/>
+  </g>
+
+  <g transform="translate(580, 270)" text-anchor="middle">
+    <rect x="-240" y="-80" width="480" height="160" rx="20" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.15)" stroke-width="2"/>
+    <text y="-10" font-family="'Bricolage Grotesque', sans-serif" font-weight="800" font-size="34" fill="#ffffff" letter-spacing="-0.02em">UNIVERSO DA BIKE</text>
+    <text y="36" font-family="'Bricolage Grotesque', sans-serif" font-weight="800" font-size="24" fill="#ff5b14" letter-spacing="0.12em">SHOWROOM &amp; OFICINA</text>
+  </g>
+
+  <g transform="translate(580, 480)" text-anchor="middle">
+    <text font-family="'Hanken Grotesk', sans-serif" font-weight="600" font-size="18" fill="rgba(255,255,255,0.75)">Espírito Santo &amp; Bahia • Atendimento Especializado</text>
+  </g>
+</svg>
