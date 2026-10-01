@@ -7,38 +7,31 @@ const MOTOS = [
   { src: "assets/img/motos/scooter.png", w: 1217, h: 1293, escala: 0.82 }
 ];
 
-/* Carrossel infinito do hero: uma imagem por vez, 1500ms parada + 500ms de transição. */
+/* Carrossel infinito do hero: primeira imagem aparece instantânea,
+   restante carrega em background — sem esperar Promise.all para exibir. */
 function initCarrossel() {
   const pista = document.getElementById("pista");
   if (!pista || !MOTOS.length) return;
   const parado = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const promessas = MOTOS.map(function (m, i) {
-    return new Promise(function (ok) {
-      const img = new Image();
-      img.onload = function () { ok(img); };
-      img.onerror = function () { ok(null); };
-      if (i === 0 && "fetchPriority" in img) img.fetchPriority = "high";
-      img.src = m.src;
-    });
-  });
-  Promise.all(promessas).then(function (imgs) {
-    const validas = [];
-    imgs.forEach(function (img, i) {
-      if (!img || !img.naturalWidth) return;
-      img.alt = "";
-      img.draggable = false;
-      img.width = MOTOS[i].w;
-      img.height = MOTOS[i].h;
-      if (MOTOS[i].escala) {
-        img.style.width = (MOTOS[i].escala * 100) + "%";
-        img.style.height = (MOTOS[i].escala * 100) + "%";
-      }
-      img.className = "slide" + (validas.length === 0 ? " ativa" : "");
-      pista.appendChild(img);
-      validas.push(img);
-    });
-    if (window.ScrollTrigger) ScrollTrigger.refresh();
-    if (parado || validas.length < 2) return;
+  const validas = [];
+  let carrosselIniciado = false;
+
+  function montarImg(m, i, img) {
+    img.alt = "";
+    img.draggable = false;
+    img.width = m.w;
+    img.height = m.h;
+    if (m.escala) {
+      img.style.width  = (m.escala * 100) + "%";
+      img.style.height = (m.escala * 100) + "%";
+    }
+    img.className = "slide";
+    return img;
+  }
+
+  function iniciarRotacao() {
+    if (parado || validas.length < 2 || carrosselIniciado) return;
+    carrosselIniciado = true;
     let atual = 0;
     (function troca() {
       setTimeout(function () {
@@ -53,7 +46,44 @@ function initCarrossel() {
         }, 500);
       }, 1500);
     })();
-  });
+  }
+
+  /* Primeira imagem: prioridade máxima — exibe imediatamente ao carregar */
+  const primeiroImg = new Image();
+  if ("fetchPriority" in primeiroImg) primeiroImg.fetchPriority = "high";
+  primeiroImg.src = MOTOS[0].src;
+  primeiroImg.onload = function () {
+    montarImg(MOTOS[0], 0, primeiroImg);
+    primeiroImg.classList.add("ativa");
+    pista.appendChild(primeiroImg);
+    validas.push(primeiroImg);
+    if (window.ScrollTrigger) ScrollTrigger.refresh();
+    /* Carrega o resto em background */
+    MOTOS.slice(1).forEach(function (m, idx) {
+      const img = new Image();
+      img.src = m.src;
+      img.onload = function () {
+        montarImg(m, idx + 1, img);
+        pista.appendChild(img);
+        validas.push(img);
+        iniciarRotacao();
+      };
+    });
+  };
+  primeiroImg.onerror = function () {
+    /* fallback: comportamento antigo se a primeira falhar */
+    MOTOS.slice(1).forEach(function (m, idx) {
+      const img = new Image();
+      img.src = m.src;
+      img.onload = function () {
+        montarImg(m, idx + 1, img);
+        if (!validas.length) img.classList.add("ativa");
+        pista.appendChild(img);
+        validas.push(img);
+        iniciarRotacao();
+      };
+    });
+  };
 }
 /* WHATSAPP — NÚMERO OFICIAL ÚNICO DO SITE
    Número oficial: 5527988977716 (Serra & Vila Velha) */
