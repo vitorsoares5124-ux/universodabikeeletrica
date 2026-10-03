@@ -85,8 +85,8 @@ function initCarrossel() {
     });
   };
 }
-/* WHATSAPP — NÚMERO OFICIAL ÚNICO DO SITE
-   Número oficial: 5527988977716 (Serra & Vila Velha) */
+/* WHATSAPP — NÚMEROS OFICIAIS DO SITE
+   Padrão/generic: 5527988977716 (Serra) — Vila Velha usa 5527997873811 via data-wa-num no HTML */
 const WHATSAPP_NUMERO = "5527988977716";
 const WHATSAPP_MENSAGEM = "Olá! Vim pelo site e quero ver os modelos.";
 
